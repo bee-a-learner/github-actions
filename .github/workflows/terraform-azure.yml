@@ -32,9 +32,9 @@ jobs:
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
     
-    - uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_SPN_CREDENTIAL }}
+    # - uses: azure/login@v1
+    #   with:
+    #     creds: ${{ secrets.AZURE_SPN_CREDENTIAL }}
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
