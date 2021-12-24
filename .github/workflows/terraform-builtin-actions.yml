@@ -34,8 +34,20 @@ jobs:
        with:
           action: init
           directory: ${{env.ROOT_PATH}}
-     - name: terraform
+     - name: terraform validate
        uses: robertdebock/terraform-action@1.1.2
        with:
           action: validate
+          directory: ${{env.ROOT_PATH}}
+    
+     - name: terraform plan
+       uses: robertdebock/terraform-action@1.1.2
+       with:
+          action: plan
+          directory: ${{env.ROOT_PATH}}
+
+     - name: terraform apply
+       uses: robertdebock/terraform-action@1.1.2
+       with:
+          action: plan
           directory: ${{env.ROOT_PATH}}
