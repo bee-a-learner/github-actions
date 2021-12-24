@@ -1,5 +1,5 @@
 
-name: 'Terraform-Azure'
+name: 'terraform-Azure'
 
 on:
   push:
@@ -7,22 +7,21 @@ on:
     - main
   pull_request:
 
-
-jobs:
-  
-
-  terraform_plan:
-    name: 'Terraform'
-    runs-on: ubuntu-latest
-    environment: production
-    env: 
+env: 
       ROOT_PATH: '${{github.workspace}}/actions/terraform-azure'
       ARM_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}
       ARM_CLIENT_SECRET: ${{secrets.AZURE_CLIENT_SECRET}}
       ARM_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
       ARM_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
-    
 
+jobs:
+  
+
+  terraform_plan:
+    name: 'terraform plan'
+    runs-on: ubuntu-latest
+    environment: production
+    
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
@@ -32,7 +31,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Setup Terraform
+    - name: Setup terraform
       uses: hashicorp/setup-terraform@v1
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
@@ -41,27 +40,21 @@ jobs:
     #   with:
     #     creds: ${{ secrets.AZURE_SPN_CREDENTIAL }}
 
-    - name: Terraform Init
+    - name: terraform init
       run: terraform init
       working-directory: ${{ env.ROOT_PATH }}
 
-    - name: Terraform Plan
+    - name: terraform Plan
       run: terraform plan 
       working-directory: ${{ env.ROOT_PATH }}
       
 
   terraform_apply:
-    name: 'Terraform apply'
+    name: 'terraform apply'
     needs: [terraform_plan]
     runs-on: ubuntu-latest
     environment: production
-    env: 
-      ROOT_PATH: '${{github.workspace}}/actions/terraform-azure'
-      ARM_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}
-      ARM_CLIENT_SECRET: ${{secrets.AZURE_CLIENT_SECRET}}
-      ARM_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
-      ARM_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
-
+    
     defaults:
       run:
         shell: bash
@@ -70,16 +63,16 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Setup Terraform
+    - name: Setup terraform
       uses: hashicorp/setup-terraform@v1
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
  
-    - name: Terraform Init
+    - name: terraform Init
       run: terraform init
       working-directory: ${{ env.ROOT_PATH }}
 
-    - name: Terraform Apply
+    - name: terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: terraform apply -auto-approve
       working-directory: ${{ env.ROOT_PATH }}
