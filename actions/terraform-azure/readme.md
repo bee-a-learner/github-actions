@@ -32,7 +32,8 @@ the result will looks like this
 
 
 
-- 3. click on actions tab under github in your repository
+- 3. click on actions tab under github in your repository and create secrets
+
 
 ```
  export ARM_CLIENT_ID="00000000-0000-0000-0000-000000000000"
@@ -40,3 +41,13 @@ $ export ARM_CLIENT_SECRET="00000000-0000-0000-0000-000000000000"
 $ export ARM_SUBSCRIPTION_ID="00000000-0000-0000-0000-000000000000"
 $ export ARM_TENANT_ID="00000000-0000-0000-0000-000000000000"
 ```
+
+- 4. set the environment variables into your workflow file
+
+
+```env: 
+      ROOT_PATH: '${{github.workspace}}/actions/terraform-azure'
+      ARM_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}
+      ARM_CLIENT_SECRET: ${{secrets.AZURE_CLIENT_SECRET}}
+      ARM_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+      ARM_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}```
