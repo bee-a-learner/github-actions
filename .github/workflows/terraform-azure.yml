@@ -46,7 +46,7 @@ jobs:
     name: 'terraform apply'
     needs: [terraform_plan]
     runs-on: ubuntu-latest
-    environment: ${{ env.STAGE_NAME }}
+    environment: production
     
     defaults:
       run:
