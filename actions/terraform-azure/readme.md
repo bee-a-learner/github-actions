@@ -1,4 +1,4 @@
-#GitHub Actions with Terraform 
+# GitHub Actions with Terraform 
 
 This document describes the workflow to deploy azure infrastrcture with terraform
 
@@ -23,3 +23,5 @@ the result will looks like this
   "tenant": "xxxxxxxxxxxxxxxxxxxxx-fed22a"
 }
 ```
+
+- 3. click on actions tab under github in your repository
