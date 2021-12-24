@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     env: 
-      ROOT_PATH: "../../actions/terraform-azure"
+      ROOT_PATH: '${{GITHUB_WORKSPACE}}/actions/terraform-azure'
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
