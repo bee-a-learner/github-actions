@@ -7,26 +7,23 @@ on:
     - main
   pull_request:
 
+# Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+defaults:
+  run:
+    shell: bash
 env: 
-      ROOT_PATH: '${{github.workspace}}/actions/terraform-azure'
-      ARM_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}
-      ARM_CLIENT_SECRET: ${{secrets.AZURE_CLIENT_SECRET}}
-      ARM_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
-      ARM_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
+  ROOT_PATH: '${{github.workspace}}/actions/terraform-azure'
+  ARM_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}
+  ARM_CLIENT_SECRET: ${{secrets.AZURE_CLIENT_SECRET}}
+  ARM_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+  ARM_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
+  STAGE_NAME: production
 
 jobs:
-  
-
   terraform_plan:
     name: 'terraform plan'
     runs-on: ubuntu-latest
-    environment: production
     
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-    defaults:
-      run:
-        shell: bash
-
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -35,11 +32,7 @@ jobs:
       uses: hashicorp/setup-terraform@v1
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-    
-    # - uses: azure/login@v1
-    #   with:
-    #     creds: ${{ secrets.AZURE_SPN_CREDENTIAL }}
-
+  
     - name: terraform init
       run: terraform init
       working-directory: ${{ env.ROOT_PATH }}
@@ -53,7 +46,7 @@ jobs:
     name: 'terraform apply'
     needs: [terraform_plan]
     runs-on: ubuntu-latest
-    environment: production
+    environment: ${{env.STAGE_NAME}}
     
     defaults:
       run:
