@@ -1,5 +1,5 @@
 
-name: 'Terraform-Azure'
+name: 'Terraform-action'
 
 on:
   push:
