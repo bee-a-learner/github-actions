@@ -4,8 +4,10 @@ name: 'terraform-Azure'
 on:
   push:
     branches:
-    - main
+      - main
   pull_request:
+    branches:
+      - main
 
 # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
 defaults:
