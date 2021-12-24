@@ -52,7 +52,7 @@ jobs:
 
   terraform_apply:
     name: 'Terraform apply'
-    needs: [setup,terraform_apply]
+    needs: [terraform_plan]
     runs-on: ubuntu-latest
     environment: production
     env: 
