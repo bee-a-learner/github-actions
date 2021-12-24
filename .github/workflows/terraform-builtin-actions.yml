@@ -1,0 +1,41 @@
+
+name: 'Terraform-Azure'
+
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+
+
+jobs:
+  terraform_plan:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    environment: production
+    env: 
+      ROOT_PATH: '${{github.workspace}}/actions/terraform-azure'
+      ARM_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}
+      ARM_CLIENT_SECRET: ${{secrets.AZURE_CLIENT_SECRET}}
+      ARM_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+      ARM_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+     - name: checkout
+       uses: actions/checkout@v2
+     - name: terraform
+       uses: robertdebock/terraform-action@1.1.2
+       with:
+          action: init
+          directory: ${{env.ROOT_PATH}}
+     - name: terraform
+       uses: robertdebock/terraform-action@1.1.2
+       with:
+          action: validate
+          directory: ${{env.ROOT_PATH}}

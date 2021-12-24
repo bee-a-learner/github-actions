@@ -9,7 +9,7 @@ on:
 
 
 jobs:
-  terraform:
+  terraform_plan:
     name: 'Terraform'
     runs-on: ubuntu-latest
     environment: production
