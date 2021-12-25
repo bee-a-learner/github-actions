@@ -34,12 +34,24 @@ env:
 jobs:
   terraform_plan:
     name: 'terraform plan'
-    uses: bee-a-learner/github-actions/.github/workflows/tf_build.yml@main
-    with:
-      client_id: ${{secrets.AZURE_CLIENT_ID}}
-      client_secret: ${{secrets.AZURE_CLIENT_SECRET}}
-      subscription_id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
-      tenant_id: ${{secrets.AZURE_TENANT_ID}}
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+  
+    - name: terraform init
+      run: terraform init
+      working-directory: ${{ env.ROOT_PATH }}
+
+    - name: terraform Plan
+      run: terraform plan 
+      working-directory: ${{ env.ROOT_PATH }}
       
 
   terraform_apply:

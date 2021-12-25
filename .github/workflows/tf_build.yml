@@ -1,0 +1,60 @@
+name: 'terraform-Azure'
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "/actions/terraform-azure/*"
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch: #this attribute will enable the manual run to the pipeline
+  workflow_call:
+    secrets:
+      client_secret:
+        required: true
+    inputs:
+      client_id:
+        type: string
+        required: true
+      subscription_id:
+        type: string
+        required: true
+      tenant_id:
+        type: string
+        required: true
+
+# Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+defaults:
+  run:
+    shell: bash
+env: 
+  ROOT_PATH: '${{github.workspace}}/actions/terraform-azure'
+  ARM_CLIENT_ID: ${{inputs.client_id}}
+  ARM_CLIENT_SECRET: ${{inputs.client_secret}}
+  ARM_SUBSCRIPTION_ID: ${{inputs.subscription_id}}
+  ARM_TENANT_ID: ${{inputs.tenant_id}}
+  
+
+jobs:
+  terraform_plan:
+    name: 'terraform plan'
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+  
+    - name: terraform init
+      run: terraform init
+      working-directory: ${{ env.ROOT_PATH }}
+
+    - name: terraform Plan
+      run: terraform plan 
+      working-directory: ${{ env.ROOT_PATH }}
