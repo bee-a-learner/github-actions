@@ -37,10 +37,10 @@ jobs:
     uses: bee-a-learner/github-actions/.github/workflows/tf_build.yml@main
     with:
       ROOT_PATH: '${{github.workspace}}/actions/terraform-azure'
-      # client_id: ${{secrets.ARM_CLIENT_ID}}
-      # client_secret: ${{secrets.AZURE_CLIENT_SECRET}}
-      # subscription_id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
-      # tenant_id: ${{secrets.AZURE_TENANT_ID}}
+      client_id: ${{secrets.AZURE_CLIENT_ID}}
+      client_secret: ${{secrets.AZURE_CLIENT_SECRET}}
+      subscription_id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+      tenant_id: ${{secrets.AZURE_TENANT_ID}}
       
 
   terraform_apply:

@@ -11,19 +11,19 @@ on:
       - main
   workflow_dispatch: #this attribute will enable the manual run to the pipeline
   workflow_call:
-    # secrets:
-    #   client_secret:
-    #     required: true
+    secrets:
+      client_secret:
+        required: true
     inputs:
       ROOT_PATH:
         type: string
         required: true
-      # subscription_id:
-      #   type: string
-      #   required: true
-      # tenant_id:
-      #   type: string
-      #   required: true
+      subscription_id:
+        type: string
+        required: true
+      tenant_id:
+        type: string
+        required: true
 
 # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
 defaults:
