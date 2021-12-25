@@ -77,13 +77,17 @@ jobs:
       run: terraform init
       working-directory: ${{ env.ROOT_PATH }}
 
+    - name: terraform Init
+      run: echo 'var -> ${{inputs.tf_destroy}}'
+      working-directory: ${{ env.ROOT_PATH }}
+
       #github.ref == 'refs/heads/main' && github.event_name == 'push'
     - name: terraform Apply
-      if: ${{inputs.tf_destroy}} == false
       run: terraform apply -auto-approve
+      if: ${{inputs.tf_destroy}} == false
       working-directory: ${{ env.ROOT_PATH }}
 
     - name: terraform destroy
-      if: ${{inputs.tf_destroy}} == true
       run: terraform destroy -auto-approve
+      if: ${{inputs.tf_destroy}} == true
       working-directory: ${{ env.ROOT_PATH }}
