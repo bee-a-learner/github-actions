@@ -43,6 +43,9 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - name: print path
+      run: echo 'path ::${{ inputs.ROOT_PATH }}'
+
     - name: Checkout
       uses: actions/checkout@v2
 
