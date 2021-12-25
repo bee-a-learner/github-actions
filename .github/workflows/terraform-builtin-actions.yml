@@ -5,8 +5,8 @@ on:
   push:
     branches:
       - main
-    paths:
-      - '**/actions/terraform-azure/**'
+    # paths:
+    #   - '**/actions/terraform-azure/**'
     # branches-ignore:
     #     - 'feature/*'
   pull_request:
