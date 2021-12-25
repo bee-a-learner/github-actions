@@ -2,9 +2,9 @@ name: .NetCore app to an azure wap
 
 env:
   AZURE_WEBAPP_NAME: github-workflow-demo    # set this to the name of your Azure Web App
-  AZURE_WEBAPP_PACKAGE_PATH: '.'
-  ROOT_PATH: './actions/aspnet6'      # set this to the path to your web app project, defaults to the repository root
-  DOTNET_VERSION: '6.0.x'                 # set this to the .NET Core version to use
+  AZURE_WEBAPP_PACKAGE_PATH: '.'             # set this to the path to your web app project, defaults to the repository root
+  ROOT_PATH: './actions/aspnet6'     
+  DOTNET_VERSION: '6.0.x'                    # set this to the .NET Core version to use
 
 on:
   push:
