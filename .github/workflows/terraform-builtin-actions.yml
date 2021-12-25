@@ -7,11 +7,16 @@ on:
       - main
     # paths:
     #   - '**/actions/terraform-azure/**'
-    # branches-ignore:
-    #     - 'feature/*'
   pull_request:
     
   workflow_dispatch: #this attribute will enable the manual run to the pipeline
+  workflow_call:
+    inputs:
+      destroy:
+        description: 'tick this option if you want to destroy environment'
+        default: false
+        required: false
+        type: boolean
    
 
 

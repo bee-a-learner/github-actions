@@ -10,6 +10,14 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch: #this attribute will enable the manual run to the pipeline
+  workflow_call:
+    inputs:
+      tf_destroy:
+        description: 'tick this option if you want to destroy environment'
+        default: false
+        required: false
+        type: boolean
 
 # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
 defaults:
@@ -70,6 +78,14 @@ jobs:
       working-directory: ${{ env.ROOT_PATH }}
 
     - name: terraform Apply
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform apply -auto-approve
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push' && 
+      run: |
+        if ${{input.tf_destroy}} == false; 
+          then
+            echo 'running terraform apply now'
+            terraform apply -auto-approve
+        else
+           echo 'destroying resource as you have selected detroy option'
+           terraform apply -auto-approve
+        fi
       working-directory: ${{ env.ROOT_PATH }}
