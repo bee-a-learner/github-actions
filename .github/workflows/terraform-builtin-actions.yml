@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - "/actions/terraform-azure**"
+      - '/actions/terraform-azure/**'
     # branches-ignore:
     #     - 'feature/*'
   pull_request:
