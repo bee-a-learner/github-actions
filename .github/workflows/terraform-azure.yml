@@ -78,15 +78,14 @@ jobs:
       working-directory: ${{ env.ROOT_PATH }}
 
     - name: terraform Apply
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run:  terraform apply -auto-approve
-      # |
-      #   if ${{inputs.tf_destroy}} == false; 
-      #     then
-      #       echo 'running terraform apply now'
-      #       terraform apply -auto-approve
-      #   else
-      #      echo 'destroying resource as you have selected detroy option'
-      #      terraform destroy -auto-approve
-      #   fi
+      #if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: |
+        if ${{inputs.tf_destroy}} == false; 
+          then
+            echo 'running terraform apply now'
+            terraform apply -auto-approve
+        else
+           echo 'destroying resource as you have selected detroy option'
+           terraform destroy -auto-approve
+        fi
       working-directory: ${{ env.ROOT_PATH }}
