@@ -44,7 +44,7 @@ jobs:
     
     steps:
     - name: print path
-      run: echo 'path ::${{ inputs.ROOT_PATH }}'
+      run: echo 'path ::${{github.workspace}}/${{ inputs.ROOT_PATH }}'
 
     - name: Checkout
       uses: actions/checkout@v2
