@@ -80,7 +80,7 @@ jobs:
     - name: terraform Apply
       #if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: |
-        if ${{inputs.tf_destroy}} == false; then
+        if ${{inputs.tf_destroy}}; then
             echo 'running terraform apply now'
             terraform apply -auto-approve
         else
