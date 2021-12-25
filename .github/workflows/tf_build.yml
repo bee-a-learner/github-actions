@@ -1,4 +1,4 @@
-name: 'terraform-Azure'
+name: 'terraform-plan'
 
 on:
   push:
