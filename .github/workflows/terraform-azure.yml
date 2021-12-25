@@ -11,13 +11,7 @@ on:
     branches:
       - main
   workflow_dispatch: #this attribute will enable the manual run to the pipeline
-  workflow_call:
-    inputs:
-      tf_destroy:
-        description: 'tick this option if you want to destroy environment'
-        default: false
-        type: boolean
-        required: true
+  
 
 # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
 defaults:
@@ -25,18 +19,33 @@ defaults:
     shell: bash
 env: 
   ROOT_PATH: '${{github.workspace}}/actions/terraform-azure'
+  ARM_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}
+  ARM_CLIENT_SECRET: ${{secrets.AZURE_CLIENT_SECRET}}
+  ARM_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+  ARM_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
   STAGE_NAME: production
 
 jobs:
   terraform_plan:
-    name: 'step-01'
-    uses: bee-a-learner/github-actions/.github/workflows/tf_build.yml@main
-    with:
-      ROOT_PATH: '${{github.workspace}}/actions/terraform-azure'
-      # client_id: ${{secrets.AZURE_CLIENT_ID}}
-      # client_secret: ${{secrets.AZURE_CLIENT_SECRET}}
-      # subscription_id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
-      # tenant_id: ${{secrets.AZURE_TENANT_ID}}
+    name: 'terraform plan'
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+  
+    - name: terraform init
+      run: terraform init
+      working-directory: ${{ env.ROOT_PATH }}
+
+    - name: terraform Plan
+      run: terraform plan 
+      working-directory: ${{ env.ROOT_PATH }}
       
 
   terraform_apply:
