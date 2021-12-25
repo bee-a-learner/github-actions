@@ -16,8 +16,8 @@ on:
       tf_destroy:
         description: 'tick this option if you want to destroy environment'
         default: false
-        required: false
         type: boolean
+        required: true
 
 # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
 defaults:
