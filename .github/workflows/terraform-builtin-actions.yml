@@ -4,7 +4,11 @@ name: 'Terraform-action'
 on:
   push:
     branches:
-    - main
+      - main
+    paths:
+      - "/actions/terraform-azure/*"
+    # branches-ignore:
+    #     - 'feature/*'
   pull_request:
   workflow_dispatch: #this attribute will enable the manual run to the pipeline
 
