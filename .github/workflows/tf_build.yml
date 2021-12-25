@@ -56,8 +56,8 @@ jobs:
   
     - name: terraform init
       run: terraform init
-      working-directory: ${{ inputs.ROOT_PATH }}
+      working-directory: ${{github.workspace}}${{ inputs.ROOT_PATH }}
 
     - name: terraform Plan
       run: terraform plan 
-      working-directory: ${{ inputs.ROOT_PATH }}
+      working-directory: ${{github.workspace}}${{ inputs.ROOT_PATH }}
