@@ -24,20 +24,26 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: your-app-name    # set this to your application's name
+  AZURE_WEBAPP_NAME: nodejs-wap    # set this to your application's name
   AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
-  NODE_VERSION: '16.x'                # set this to the node version to use
+  ROOT_PATH: './actions/nodejs'
+
+  
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+        os: [macos-latest, windows-latest, ubuntu-18.04]
+    runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v2
 
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: ${{ env.NODE_VERSION }}
+        node-version:  ${{ matrix.node-version }}
         cache: 'npm'
 
     - name: npm install, build, and test
