@@ -11,30 +11,30 @@ on:
       - main
   workflow_dispatch: #this attribute will enable the manual run to the pipeline
   workflow_call:
-    secrets:
-      client_secret:
-        required: true
+    # secrets:
+    #   client_secret:
+    #     required: true
     inputs:
-      client_id:
+      ROOT_PATH:
         type: string
         required: true
-      subscription_id:
-        type: string
-        required: true
-      tenant_id:
-        type: string
-        required: true
+      # subscription_id:
+      #   type: string
+      #   required: true
+      # tenant_id:
+      #   type: string
+      #   required: true
 
 # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
 defaults:
   run:
     shell: bash
-env: 
-  ROOT_PATH: '${{github.workspace}}/actions/terraform-azure'
-  ARM_CLIENT_ID: ${{inputs.client_id}}
-  ARM_CLIENT_SECRET: ${{secrets.client_secret}}
-  ARM_SUBSCRIPTION_ID: ${{inputs.subscription_id}}
-  ARM_TENANT_ID: ${{inputs.tenant_id}}
+# env: 
+#   ROOT_PATH: '${{github.workspace}}/actions/terraform-azure'
+  # ARM_CLIENT_ID: ${{inputs.client_id}}
+  # ARM_CLIENT_SECRET: ${{secrets.client_secret}}
+  # ARM_SUBSCRIPTION_ID: ${{inputs.subscription_id}}
+  # ARM_TENANT_ID: ${{inputs.tenant_id}}
   
 
 jobs:
@@ -53,8 +53,8 @@ jobs:
   
     - name: terraform init
       run: terraform init
-      working-directory: ${{ env.ROOT_PATH }}
+      working-directory: ${{ inputs.ROOT_PATH }}
 
     - name: terraform Plan
       run: terraform plan 
-      working-directory: ${{ env.ROOT_PATH }}
+      working-directory: ${{ inputs.ROOT_PATH }}
