@@ -47,3 +47,8 @@ jobs:
              inlineScript: |
                Get-AzResourceGroup
              azPSVersion: "latest"
+             
+      - name: 'deploy storage account bicep'
+        working-directory: '${{github.workspace}}/actions/bicep'
+        run: |
+          az deployment group create --resource-group demo-rg --template-file './strorage.bicep'
