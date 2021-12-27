@@ -16,6 +16,26 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
+  bicep_build:
+    name: bicep build 
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+            creds: ${{ secrets.AZURE_SPN_CREDENTIAL }}
+
+      - name: 'deploy storage account bicep'
+        working-directory: '${{github.workspace}}/actions/bicep'
+        run: |
+          az deployment group create --what-if --resource-group demo-rg --template-file './strorage.bicep' --parameters @parameters.json
+
   bicep_deployment:
     name: bicep deployment 
     # The type of runner that the job will run on
@@ -34,4 +54,4 @@ jobs:
       - name: 'deploy storage account bicep'
         working-directory: '${{github.workspace}}/actions/bicep'
         run: |
-          az deployment group what-if --resource-group demo-rg --template-file './strorage.bicep' --parameters @parameters.json
+          az deployment group create --resource-group demo-rg --template-file './strorage.bicep' --parameters @parameters.json
