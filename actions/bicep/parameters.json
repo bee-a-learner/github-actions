@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
       "storage_account_name": {
-        "value": "st12mskuexszw3"
+        "value": "st12mskuexszw4"
       },
       "location": {
         "value": "west europe"
